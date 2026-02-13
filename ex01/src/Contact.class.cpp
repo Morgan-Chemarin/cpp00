@@ -6,63 +6,77 @@
 /*   By: dev <dev@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 10:06:49 by dev               #+#    #+#             */
-/*   Updated: 2026/02/10 14:45:08 by dev              ###   ########.fr       */
+/*   Updated: 2026/02/13 16:34:21 by dev              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "Contact.class.hpp"
 
-Contact::Contact()
+Contact::Contact( void )
 {
+
 }
 
-static void getInput(const std::string &prompt, std::string &field)
+Contact::~Contact( void )
+{}
+
+static bool getInput(std::string prompt, std::string &field)
 {
 	while (field.empty())
 	{
 		std::cout << prompt;
-		std::getline(std::cin, field);
-		if (field.empty())
-			std::cout << "Field is empty" << std::endl;
+		if (!std::getline(std::cin, field))
+			return false;
+
+		if (!field.empty())
+			return true;
+
+		std::cout << "Field can't be empty." << std::endl;
 	}
+	
+	return true;
 }
 
-void Contact::setContact()
+void Contact::setContact( void )
 {
-	firstName.clear();
-    lastName.clear();
-    nickname.clear();
-    phoneNumber.clear();
-    darkestSecret.clear();
+	this->firstName.clear();
+	this->lastName.clear();
+	this->nickName.clear();
+	this->phoneNumber.clear();
+	this->darkestSecret.clear();
 
-	getInput("First name: ", firstName);
-	getInput("Last name: ", lastName);
-	getInput("Nickname: ", nickname);
-	getInput("Phone number: ", phoneNumber);
-	getInput("Darkest secret: ", darkestSecret);
+	if (!getInput("First name: ", this->firstName)) return;
+	if (!getInput("Last name: ", this->lastName)) return;
+	if (!getInput("Nickname: ", this->nickName)) return;
+	if (!getInput("Phone number: ", this->phoneNumber)) return;
+	if (!getInput("Darkest secret: ", this->darkestSecret)) return;
+
+	return;
 }
 
-std::string Contact::getFirstName() const
+std::string Contact::getFirstName( void)
 {
-	return firstName;
+	return this->firstName;
 }
 
-std::string Contact::getLastName() const
+std::string Contact::getLastName( void)
 {
-	return lastName;
+	return this->lastName;
 }
 
-std::string Contact::getNickname() const
+std::string Contact::getNickName( void)
 {
-	return nickname;
+	return this->nickName;
 }
 
-void Contact::displayFull() const
+void Contact::displayFull( void )
 {
-	std::cout << "First name: " << firstName << std::endl;
-	std::cout << "Last name: " << lastName << std::endl;
-	std::cout << "Nickname: " << nickname << std::endl;
-	std::cout << "Phone number: " << phoneNumber << std::endl;
-	std::cout << "Darkest secret: " << darkestSecret << std::endl;
+	std::cout << "First name: " << this->firstName << std::endl
+			  << "Last name: " << this->lastName << std::endl
+			  << "Nick name: " << this->nickName << std::endl
+			  << "Phone number: " << this->phoneNumber << std::endl
+			  << "Darkest secret: " << this->darkestSecret << std::endl;
+	
+	return;
 }
